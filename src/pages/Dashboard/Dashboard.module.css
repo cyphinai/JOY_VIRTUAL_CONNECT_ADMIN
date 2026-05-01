@@ -1,0 +1,55 @@
+.wrap{
+  display: grid;
+  gap: 14px;
+}
+
+.hero{
+  background: #ffffff;
+  border: 1px solid var(--border);
+}
+
+.heroTitle{
+  font-size: 18px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+}
+
+.heroSub{
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.heroRole{
+  color: var(--text);
+  font-weight: 700;
+}
+
+.stat{
+  min-height: 108px;
+}
+
+.statLabel{
+  font-size: 12px;
+  color: var(--muted);
+}
+.statValue{
+  font-size: 26px;
+  font-weight: 800;
+  margin-top: 6px;
+  letter-spacing: 0.2px;
+}
+.statNote{
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.panel{}
+
+.actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+

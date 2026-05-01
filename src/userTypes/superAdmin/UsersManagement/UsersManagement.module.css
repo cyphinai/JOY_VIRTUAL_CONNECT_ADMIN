@@ -1,0 +1,56 @@
+.wrap{
+  display: grid;
+  gap: 14px;
+}
+
+.header{}
+
+.filters{
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 12px;
+}
+
+.rowActions{
+  display: flex;
+  gap: 10px;
+}
+
+.form{
+  display: grid;
+  gap: 12px;
+}
+
+.field{
+  display: grid;
+  gap: 8px;
+}
+
+.label{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.error{
+  font-size: 12px;
+  color: rgba(255,107,107,0.92);
+}
+
+.mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  color: rgba(15,23,42,0.78);
+}
+
+.emailCell{
+  font-size: 12px;
+  color: rgba(15,23,42,0.78);
+  max-width: 200px;
+  word-break: break-all;
+}
+
+@media (max-width: 900px){
+  .filters{ grid-template-columns: 1fr; }
+  .rowActions{ flex-wrap: wrap; }
+}
+

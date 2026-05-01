@@ -9,11 +9,14 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.2",
     "react-scripts": "5.0.1",
+    "serve": "^14.2.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:prod": "serve -s build -l tcp://0.0.0.0:$PORT",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

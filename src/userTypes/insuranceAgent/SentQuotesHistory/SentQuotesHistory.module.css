@@ -1,0 +1,60 @@
+.wrap {
+  display: grid;
+  gap: 14px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.breadcrumbLink {
+  color: rgba(110, 231, 255, 0.95);
+  text-decoration: none;
+}
+.breadcrumbLink:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbSep {
+  opacity: 0.6;
+}
+
+.breadcrumbCurrent {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.muted {
+  color: var(--muted);
+  margin: 0;
+}
+
+.subline {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.notesCell {
+  max-width: 220px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+}

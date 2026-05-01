@@ -1,0 +1,56 @@
+.wrap{
+  display: grid;
+  gap: 14px;
+}
+
+.tools{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lead{
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.serviceForm{
+  display: grid;
+  gap: 12px;
+}
+
+.formField{
+  display: grid;
+  gap: 6px;
+}
+
+.formLabel{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.formError{
+  font-size: 12px;
+  color: rgba(255,107,107,0.92);
+}
+
+.formRowCheck{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.formCheckLabel{
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+

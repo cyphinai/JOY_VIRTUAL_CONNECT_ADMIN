@@ -1,0 +1,103 @@
+.wrap{
+  display: grid;
+  gap: 14px;
+}
+
+.tools{
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) 160px auto auto;
+  gap: 10px;
+  align-items: center;
+  justify-content: end;
+}
+
+.actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bulkBar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+  margin-bottom: 12px;
+}
+
+.bulkInfo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bulkActions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.detailGrid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.detailItem{
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+}
+
+.detailLabel{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.detailValue{
+  margin-top: 6px;
+  color: var(--text);
+}
+
+.quoteLine{
+  display: block;
+  margin-top: 6px;
+  color: var(--text);
+}
+
+.quoteKey{
+  color: var(--muted);
+  font-size: 12px;
+  margin-right: 6px;
+}
+
+.composer{
+  display: grid;
+  gap: 12px;
+}
+
+.field{
+  display: grid;
+  gap: 8px;
+}
+
+.label{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.error{
+  font-size: 12px;
+  color: rgba(255,107,107,0.92);
+}
+
+@media (max-width: 900px){
+  .tools{ grid-template-columns: 1fr; }
+  .detailGrid{ grid-template-columns: 1fr; }
+}
+

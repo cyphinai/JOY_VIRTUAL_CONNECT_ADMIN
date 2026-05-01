@@ -1,0 +1,83 @@
+.wrap {
+  display: grid;
+  gap: 14px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.breadcrumbLink {
+  color: rgba(110, 231, 255, 0.95);
+  text-decoration: none;
+}
+.breadcrumbLink:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbSep {
+  opacity: 0.6;
+}
+
+.breadcrumbCurrent {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.error {
+  font-size: 12px;
+  color: rgba(255, 107, 107, 0.92);
+}
+
+.credSection {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+}
+
+.credHint {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+  margin: 0;
+}
+
+.req {
+  color: rgba(110, 231, 255, 0.95);
+  font-weight: 700;
+}
+
+.opt {
+  color: rgba(15,23,42,0.50);
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
