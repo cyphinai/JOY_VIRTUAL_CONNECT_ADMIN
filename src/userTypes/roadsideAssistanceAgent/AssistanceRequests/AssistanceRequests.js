@@ -82,7 +82,7 @@ function PhotoGallery({ photos }) {
             key={`${src}-${index}`}
             className={styles.photo}
             src={src}
-            alt={`Request photo ${index + 1}`}
+            alt={`Request upload ${index + 1}`}
           />
         ))
       ) : (
