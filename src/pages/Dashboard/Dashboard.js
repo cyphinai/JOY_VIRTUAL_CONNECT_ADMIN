@@ -1,8 +1,10 @@
 import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
 import "../../components/UI/ui.css";
 import styles from "./Dashboard.module.css";
 import { useAuth } from "../../app/auth/AuthProvider";
 import { ROLES, roleLabel } from "../../app/auth/auth";
+import { getGlobalOperationalStats } from "../../userTypes/superAdmin/adminControlUtils";
 
 function StatCard({ label, value, note }) {
   return (
@@ -21,10 +23,11 @@ export default function Dashboard() {
 
   const cards = useMemo(() => {
     if (auth?.role === ROLES.SUPER_ADMIN) {
+      const stats = getGlobalOperationalStats();
       return [
-        { label: "Total Users", value: "1,248", note: "Mobile + Admin panel users" },
-        { label: "Active Agents", value: "84", note: "Roadside + Insurance" },
-        { label: "Open Requests", value: "36", note: "Assistance + Quotes" },
+        { label: "Panel Admins", value: "3", note: "Roadside · Insurance · Support" },
+        { label: "Open Operations", value: String(stats.roadsideOpen + stats.insuranceOpen + stats.supportLive), note: "Across all agent panels" },
+        { label: "Support Alerts", value: String(stats.supportAlerts), note: "Unread in command center" },
       ];
     }
     if (auth?.role === ROLES.ROAD_ASSIST_AGENT) {
@@ -39,6 +42,13 @@ export default function Dashboard() {
         { label: "New Quote Requests", value: "9", note: "Last 24 hours" },
         { label: "Pending Follow-up", value: "4", note: "Requires response" },
         { label: "Quotes Sent", value: "18", note: "This month" },
+      ];
+    }
+    if (auth?.role === ROLES.SUPPORT_AGENT) {
+      return [
+        { label: "Live Emergencies", value: "4", note: "Priority-sorted queue" },
+        { label: "Unread Alerts", value: "2", note: "Incoming notifications" },
+        { label: "Awaiting Dispatch", value: "1", note: "Lawyer assigned, no roadside yet" },
       ];
     }
     return [{ label: "Status", value: "Ready", note: "" }];
@@ -70,15 +80,38 @@ export default function Dashboard() {
         </div>
         <div className="panelInner">
           <div className={styles.actions}>
-            <button className="btn btnPrimary" type="button">
-              Create / Update Profile
-            </button>
-            <button className="btn" type="button">
-              View Latest Requests
-            </button>
-            <button className="btn" type="button">
-              Export List (Mock)
-            </button>
+            {auth?.role === ROLES.SUPER_ADMIN ? (
+              <>
+                <Link className="btn btnPrimary" to="/super-admin/admin-control">
+                  Admin Control Center
+                </Link>
+                <Link className="btn" to="/roadside/requests">
+                  Roadside oversight
+                </Link>
+                <Link className="btn" to="/insurance/quotes">
+                  Insurance oversight
+                </Link>
+                <Link className="btn" to="/support/command-center">
+                  Support oversight
+                </Link>
+              </>
+            ) : auth?.role === ROLES.SUPPORT_AGENT ? (
+              <Link className="btn btnPrimary" to="/support/command-center">
+                Open Command Center
+              </Link>
+            ) : (
+              <>
+                <button className="btn btnPrimary" type="button">
+                  Create / Update Profile
+                </button>
+                <button className="btn" type="button">
+                  View Latest Requests
+                </button>
+                <button className="btn" type="button">
+                  Export List (Mock)
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

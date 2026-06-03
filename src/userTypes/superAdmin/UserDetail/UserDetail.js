@@ -4,6 +4,7 @@ import styles from "./UserDetail.module.css";
 import "../../../components/UI/ui.css";
 import useLocalStorageState from "../../../app/hooks/useLocalStorageState";
 import { USERS_STORAGE_KEY, DEFAULT_USERS } from "../userFormUtils";
+import { isPanelAdminType } from "../adminControlUtils";
 
 function StatusBadge({ status }) {
   const cls =
@@ -56,6 +57,11 @@ export default function UserDetail() {
             <p className="panelSub">User details</p>
           </div>
           <div className={styles.headerActions}>
+            {isPanelAdminType(user.type) ? (
+              <Link className="btn btnPrimary" to={`/super-admin/admin-control/${userId}`}>
+                Full admin control
+              </Link>
+            ) : null}
             <Link className="btn" to={`/super-admin/users/${userId}/edit`}>
               Edit user
             </Link>

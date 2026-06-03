@@ -14,6 +14,8 @@ function Icon({ name }) {
     quotes: "💬",
     compose: "✎",
     history: "📤",
+    command: "🚨",
+    control: "🛡",
     logout: "↩",
     menu: "☰",
   };
@@ -39,7 +41,7 @@ function NavItem({ to, icon, label, onClick, end }) {
 }
 
 export default function AdminLayout() {
-  const { auth, logout } = useAuth();
+  const { auth, logout, stopImpersonating, isImpersonating } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -49,8 +51,12 @@ export default function AdminLayout() {
     if (role === ROLES.SUPER_ADMIN) {
       return [
         { to: "/dashboard", icon: "dashboard", label: "Dashboard" },
+        { to: "/super-admin/admin-control", icon: "control", label: "Admin Control" },
         { to: "/super-admin/users", icon: "users", label: "Users" },
         { to: "/super-admin/users/new", icon: "compose", label: "Create user" },
+        { to: "/roadside/requests", icon: "request", label: "Roadside (oversight)" },
+        { to: "/insurance/quotes", icon: "quotes", label: "Insurance (oversight)" },
+        { to: "/support/command-center", icon: "command", label: "Support (oversight)" },
       ];
     }
 
@@ -73,6 +79,13 @@ export default function AdminLayout() {
       ];
     }
 
+    if (role === ROLES.SUPPORT_AGENT) {
+      return [
+        { to: "/dashboard", icon: "dashboard", label: "Dashboard" },
+        { to: "/support/command-center", icon: "command", label: "Command Center" },
+      ];
+    }
+
     return [{ to: "/dashboard", icon: "dashboard", label: "Dashboard" }];
   }, [auth?.role]);
 
@@ -84,6 +97,9 @@ export default function AdminLayout() {
     if (onlyUser && onlyUser[1] !== "new") return "User details";
     if (p.startsWith("/insurance/quotes/compose")) return "Compose quote";
     if (p.startsWith("/insurance/quotes/sent")) return "Sent quotes";
+    if (p.startsWith("/support/command-center")) return "Support Agent Command Center";
+    if (p.startsWith("/super-admin/admin-control/")) return "Manage admin";
+    if (p.startsWith("/super-admin/admin-control")) return "Admin Control Center";
     const match = nav.find((x) => p === x.to);
     return match?.label || "Admin";
   }, [location.pathname, nav]);
@@ -93,6 +109,11 @@ export default function AdminLayout() {
   const onLogout = () => {
     logout();
     navigate("/login", { replace: true });
+  };
+
+  const onStopImpersonating = () => {
+    stopImpersonating();
+    navigate("/super-admin/admin-control", { replace: true });
   };
 
   return (
@@ -116,7 +137,7 @@ export default function AdminLayout() {
             <NavItem
               key={item.to}
               {...item}
-              end={item.to === "/super-admin/users" || item.to === "/insurance/quotes"}
+              end={item.to === "/super-admin/users" || item.to === "/insurance/quotes" || item.to === "/super-admin/admin-control"}
               onClick={closeOnMobileNav}
             />
           ))}
@@ -149,6 +170,21 @@ export default function AdminLayout() {
         </header>
 
         <main className={styles.main}>
+          {isImpersonating ? (
+            <div className={styles.impersonationBanner}>
+              <span>
+                Viewing as <strong>{auth?.name}</strong> ({roleLabel(auth?.role)})
+              </span>
+              <button type="button" className="btn btnPrimary" onClick={onStopImpersonating}>
+                Exit impersonation
+              </button>
+            </div>
+          ) : null}
+          {auth?.role === ROLES.SUPER_ADMIN && !isImpersonating ? (
+            <div className={styles.oversightBanner}>
+              Super Admin oversight — you have full control over all agent panels and accounts.
+            </div>
+          ) : null}
           <Outlet />
         </main>
       </div>

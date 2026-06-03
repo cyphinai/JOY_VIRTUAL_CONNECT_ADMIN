@@ -5,11 +5,12 @@ export const USER_TYPE_OPTIONS = [
   { value: "lawyer", label: "Lawyer" },
   { value: "roadside_assistance_agent", label: "Roadside Assistance Agent" },
   { value: "insurance_agent", label: "Insurance Agent" },
+  { value: "support_agent", label: "Support Agent" },
   { value: "super_admin", label: "Super Admin" },
 ];
 
 /** Panel accounts that sign in with email + password (created by super admin) */
-export const TYPES_WITH_LOGIN = ["super_admin", "roadside_assistance_agent", "insurance_agent"];
+export const TYPES_WITH_LOGIN = ["super_admin", "roadside_assistance_agent", "insurance_agent", "support_agent"];
 
 export function needsLoginCredentials(type) {
   return TYPES_WITH_LOGIN.includes(type);
@@ -34,6 +35,14 @@ export const DEFAULT_USERS = [
     status: "active",
     email: "insurance@joyvc.com",
     password: "Insurance@123",
+  },
+  {
+    id: "U-4001",
+    name: "Support Agent - Nadia",
+    type: "support_agent",
+    status: "active",
+    email: "support@joyvc.com",
+    password: "Support@123",
   },
 ];
 

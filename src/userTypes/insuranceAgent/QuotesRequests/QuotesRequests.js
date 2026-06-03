@@ -10,6 +10,10 @@ import {
   INITIAL_REQUESTS,
   KEY_QUOTES_BY_REQUEST,
   KEY_REQUESTS,
+  formatCoverageLevel,
+  formatCurrentInsurance,
+  formatLapseInCoverage,
+  withRequestDefaults,
 } from "../insuranceStorage";
 
 function StatusBadge({ status }) {
@@ -22,6 +26,98 @@ function StatusBadge({ status }) {
         ? "badge"
         : "badge badgeOk";
   return <span className={cls}>{label}</span>;
+}
+
+function DetailField({ label, value, wide }) {
+  return (
+    <div className={styles.detailItem} style={wide ? { gridColumn: "1 / -1" } : undefined}>
+      <div className={styles.detailLabel}>{label}</div>
+      <div className={styles.detailValue}>{value || "—"}</div>
+    </div>
+  );
+}
+
+function DetailSection({ title, children }) {
+  return (
+    <section className={styles.detailSection}>
+      <h3 className={styles.sectionTitle}>{title}</h3>
+      <div className={styles.detailGrid}>{children}</div>
+    </section>
+  );
+}
+
+function DocumentImage({ label, src }) {
+  return (
+    <div className={`${styles.detailItem} ${styles.docImageWrap}`}>
+      <div className={styles.detailLabel}>{label}</div>
+      {src ? (
+        <img className={styles.docImage} src={src} alt={label} />
+      ) : (
+        <div className={styles.docImageEmpty}>No image uploaded</div>
+      )}
+    </div>
+  );
+}
+
+function RequestDetails({ request, quote }) {
+  const details = withRequestDefaults(request);
+  const { personal, vehicleDetails, coverage, insurance } = details;
+
+  return (
+    <div className={styles.detailSections}>
+      <DetailSection title="Personal details">
+        <DocumentImage label="Driver license image" src={personal.driverLicenseImage} />
+        <DetailField label="Full name" value={personal.fullName} />
+        <DetailField label="National Identity number" value={personal.nationalIdentityNumber} />
+        <DetailField label="Address" value={personal.address} wide />
+        <DetailField label="Email" value={personal.email} />
+        <DetailField label="Phone" value={personal.phone} />
+      </DetailSection>
+
+      <DetailSection title="Vehicle details">
+        <DocumentImage label="Vehicle VIN scan image" src={vehicleDetails.vinScanImage} />
+        <DetailField label="Year" value={vehicleDetails.year} />
+        <DetailField label="Make" value={vehicleDetails.make} />
+        <DetailField label="Model" value={vehicleDetails.model} />
+        <DetailField label="VIN number" value={vehicleDetails.vin} wide />
+      </DetailSection>
+
+      <DetailSection title="Garaging & mileage">
+        <DetailField label="Garaging address" value={details.garagingAddress} wide />
+        <DetailField label="Annual miles" value={details.annualMiles} />
+      </DetailSection>
+
+      <DetailSection title="Coverage details">
+        <DetailField label="Coverage level" value={formatCoverageLevel(coverage.level)} />
+        <DetailField label="Deductible (USD)" value={coverage.deductibleUsd ? `$${coverage.deductibleUsd}` : "—"} />
+      </DetailSection>
+
+      <DetailSection title="Insurance & discounts">
+        <DetailField label="Current insurance" value={formatCurrentInsurance(insurance.currentInsurance)} />
+        <DetailField label="Previous insurer name" value={insurance.previousInsurerName} />
+        <DetailField label="Lapse in coverage" value={formatLapseInCoverage(insurance)} />
+      </DetailSection>
+
+      <DetailSection title="Request summary">
+        <DetailField label="Request ID" value={details.id} />
+        <DetailField label="City" value={details.city} />
+        <DetailField label="Created" value={details.createdAt} />
+        <DetailField
+          label="Status"
+          value={<StatusBadge status={details.status} />}
+        />
+      </DetailSection>
+
+      {quote ? (
+        <DetailSection title="Latest quote">
+          <DetailField label="Premium" value={`${quote.premiumPkr} PKR`} />
+          <DetailField label="Coverage" value={quote.coverage} />
+          <DetailField label="Duration" value={quote.duration} />
+          {quote.notes ? <DetailField label="Notes" value={quote.notes} wide /> : null}
+        </DetailSection>
+      ) : null}
+    </div>
+  );
 }
 
 export default function QuotesRequests() {
@@ -228,7 +324,7 @@ export default function QuotesRequests() {
       <Modal
         open={Boolean(selected)}
         title={selected ? `Quote Request ${selected.id}` : ""}
-        description="Client form details (mock)"
+        description="Full client form submission"
         onClose={() => setSelected(null)}
         footer={
           <>
@@ -251,51 +347,10 @@ export default function QuotesRequests() {
         }
       >
         {selected ? (
-          <div className={styles.detailGrid}>
-            <div className={styles.detailItem}>
-              <div className={styles.detailLabel}>Client</div>
-              <div className={styles.detailValue}>{selected.clientName}</div>
-            </div>
-            <div className={styles.detailItem}>
-              <div className={styles.detailLabel}>Vehicle</div>
-              <div className={styles.detailValue}>{selected.vehicle}</div>
-            </div>
-            <div className={styles.detailItem}>
-              <div className={styles.detailLabel}>City</div>
-              <div className={styles.detailValue}>{selected.city}</div>
-            </div>
-            <div className={styles.detailItem}>
-              <div className={styles.detailLabel}>Created</div>
-              <div className={styles.detailValue}>{selected.createdAt}</div>
-            </div>
-            <div className={styles.detailItem}>
-              <div className={styles.detailLabel}>Status</div>
-              <div className={styles.detailValue}>
-                <StatusBadge status={selected.status} />
-              </div>
-            </div>
-            {quotesByRequestId[selected.id] ? (
-              <div className={styles.detailItem} style={{ gridColumn: "1 / -1" }}>
-                <div className={styles.detailLabel}>Latest quote</div>
-                <div className={styles.detailValue}>
-                  <div className={styles.quoteLine}>
-                    <span className={styles.quoteKey}>Premium:</span> {quotesByRequestId[selected.id].premiumPkr} PKR
-                  </div>
-                  <div className={styles.quoteLine}>
-                    <span className={styles.quoteKey}>Coverage:</span> {quotesByRequestId[selected.id].coverage}
-                  </div>
-                  <div className={styles.quoteLine}>
-                    <span className={styles.quoteKey}>Duration:</span> {quotesByRequestId[selected.id].duration}
-                  </div>
-                  {quotesByRequestId[selected.id].notes ? (
-                    <div className={styles.quoteLine}>
-                      <span className={styles.quoteKey}>Notes:</span> {quotesByRequestId[selected.id].notes}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            ) : null}
-          </div>
+          <RequestDetails
+            request={selected}
+            quote={quotesByRequestId[selected.id]}
+          />
         ) : null}
       </Modal>
     </div>

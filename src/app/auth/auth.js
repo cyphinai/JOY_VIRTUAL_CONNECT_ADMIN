@@ -6,18 +6,20 @@ export const ROLES = {
   SUPER_ADMIN: "super_admin",
   ROAD_ASSIST_AGENT: "roadside_assistance_agent",
   INSURANCE_AGENT: "insurance_agent",
+  SUPPORT_AGENT: "support_agent",
 };
 
 export function typeToPanelRole(type) {
   if (type === "super_admin") return ROLES.SUPER_ADMIN;
   if (type === "roadside_assistance_agent") return ROLES.ROAD_ASSIST_AGENT;
   if (type === "insurance_agent") return ROLES.INSURANCE_AGENT;
+  if (type === "support_agent") return ROLES.SUPPORT_AGENT;
   return null;
 }
 
 /**
  * Returns session payload for AuthProvider, or { error: string }.
- * Only super_admin, roadside_assistance_agent, and insurance_agent can use this admin panel.
+ * Only super_admin, roadside_assistance_agent, insurance_agent, and support_agent can use this admin panel.
  */
 export function tryLoginWithEmailPassword(email, password) {
   const em = String(email || "").trim().toLowerCase();
@@ -81,6 +83,8 @@ export function roleLabel(role) {
       return "Roadside Assistance Agent";
     case ROLES.INSURANCE_AGENT:
       return "Insurance Agent";
+    case ROLES.SUPPORT_AGENT:
+      return "Support Agent";
     default:
       return "Unknown";
   }

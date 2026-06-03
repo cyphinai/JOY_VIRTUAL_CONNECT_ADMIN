@@ -80,7 +80,8 @@ export default function LoginPage() {
 
         <p className={styles.demo}>
           Demo: <code>admin@joyvc.com</code> / <code>Admin@123</code> · <code>roadside@joyvc.com</code> /{" "}
-          <code>Roadside@123</code> · <code>insurance@joyvc.com</code> / <code>Insurance@123</code>
+          <code>Roadside@123</code> · <code>insurance@joyvc.com</code> / <code>Insurance@123</code> ·{" "}
+          <code>support@joyvc.com</code> / <code>Support@123</code>
         </p>
 
         <div className={styles.footer}>

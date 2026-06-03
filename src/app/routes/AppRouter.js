@@ -12,6 +12,8 @@ import UsersManagement from "../../userTypes/superAdmin/UsersManagement/UsersMan
 import CreateUser from "../../userTypes/superAdmin/CreateUser/CreateUser";
 import UpdateUser from "../../userTypes/superAdmin/UpdateUser/UpdateUser";
 import UserDetail from "../../userTypes/superAdmin/UserDetail/UserDetail";
+import AdminControl from "../../userTypes/superAdmin/AdminControl/AdminControl";
+import AdminDetail from "../../userTypes/superAdmin/AdminDetail/AdminDetail";
 import RoadsideAssistanceRequests from "../../userTypes/roadsideAssistanceAgent/AssistanceRequests/AssistanceRequests";
 import RoadsideProfile from "../../userTypes/roadsideAssistanceAgent/Profile/Profile";
 import RoadsideServices from "../../userTypes/roadsideAssistanceAgent/Services/Services";
@@ -19,6 +21,7 @@ import InsuranceProfile from "../../userTypes/insuranceAgent/Profile/Profile";
 import QuotesRequests from "../../userTypes/insuranceAgent/QuotesRequests/QuotesRequests";
 import ComposeQuote from "../../userTypes/insuranceAgent/ComposeQuote/ComposeQuote";
 import SentQuotesHistory from "../../userTypes/insuranceAgent/SentQuotesHistory/SentQuotesHistory";
+import CommandCenter from "../../userTypes/supportAgent/CommandCenter/CommandCenter";
 
 export default function AppRouter() {
   return (
@@ -67,11 +70,27 @@ export default function AppRouter() {
             </RoleRoute>
           }
         />
+        <Route
+          path="super-admin/admin-control/:userId"
+          element={
+            <RoleRoute allowedRoles={[ROLES.SUPER_ADMIN]}>
+              <AdminDetail />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="super-admin/admin-control"
+          element={
+            <RoleRoute allowedRoles={[ROLES.SUPER_ADMIN]}>
+              <AdminControl />
+            </RoleRoute>
+          }
+        />
 
         <Route
           path="roadside/requests"
           element={
-            <RoleRoute allowedRoles={[ROLES.ROAD_ASSIST_AGENT]}>
+            <RoleRoute allowedRoles={[ROLES.ROAD_ASSIST_AGENT, ROLES.SUPER_ADMIN]}>
               <RoadsideAssistanceRequests />
             </RoleRoute>
           }
@@ -79,7 +98,7 @@ export default function AppRouter() {
         <Route
           path="roadside/profile"
           element={
-            <RoleRoute allowedRoles={[ROLES.ROAD_ASSIST_AGENT]}>
+            <RoleRoute allowedRoles={[ROLES.ROAD_ASSIST_AGENT, ROLES.SUPER_ADMIN]}>
               <RoadsideProfile />
             </RoleRoute>
           }
@@ -87,7 +106,7 @@ export default function AppRouter() {
         <Route
           path="roadside/services"
           element={
-            <RoleRoute allowedRoles={[ROLES.ROAD_ASSIST_AGENT]}>
+            <RoleRoute allowedRoles={[ROLES.ROAD_ASSIST_AGENT, ROLES.SUPER_ADMIN]}>
               <RoadsideServices />
             </RoleRoute>
           }
@@ -96,7 +115,7 @@ export default function AppRouter() {
         <Route
           path="insurance/profile"
           element={
-            <RoleRoute allowedRoles={[ROLES.INSURANCE_AGENT]}>
+            <RoleRoute allowedRoles={[ROLES.INSURANCE_AGENT, ROLES.SUPER_ADMIN]}>
               <InsuranceProfile />
             </RoleRoute>
           }
@@ -104,7 +123,7 @@ export default function AppRouter() {
         <Route
           path="insurance/quotes/compose"
           element={
-            <RoleRoute allowedRoles={[ROLES.INSURANCE_AGENT]}>
+            <RoleRoute allowedRoles={[ROLES.INSURANCE_AGENT, ROLES.SUPER_ADMIN]}>
               <ComposeQuote />
             </RoleRoute>
           }
@@ -112,7 +131,7 @@ export default function AppRouter() {
         <Route
           path="insurance/quotes/sent"
           element={
-            <RoleRoute allowedRoles={[ROLES.INSURANCE_AGENT]}>
+            <RoleRoute allowedRoles={[ROLES.INSURANCE_AGENT, ROLES.SUPER_ADMIN]}>
               <SentQuotesHistory />
             </RoleRoute>
           }
@@ -120,8 +139,17 @@ export default function AppRouter() {
         <Route
           path="insurance/quotes"
           element={
-            <RoleRoute allowedRoles={[ROLES.INSURANCE_AGENT]}>
+            <RoleRoute allowedRoles={[ROLES.INSURANCE_AGENT, ROLES.SUPER_ADMIN]}>
               <QuotesRequests />
+            </RoleRoute>
+          }
+        />
+
+        <Route
+          path="support/command-center"
+          element={
+            <RoleRoute allowedRoles={[ROLES.SUPPORT_AGENT, ROLES.SUPER_ADMIN]}>
+              <CommandCenter />
             </RoleRoute>
           }
         />

@@ -1,0 +1,173 @@
+.wrap{
+  display: grid;
+  gap: 14px;
+}
+
+.layout{
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr) minmax(0, 320px);
+  gap: 14px;
+  align-items: start;
+}
+
+.alertsPanel,
+.queuePanel,
+.detailPanel{
+  min-height: 420px;
+}
+
+.alertList{
+  display: grid;
+  gap: 10px;
+  max-height: 520px;
+  overflow: auto;
+}
+
+.alertItem{
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: 150ms ease;
+}
+
+.alertItem:hover{
+  background: #f8fafc;
+}
+
+.alertItemUnread{
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+.alertMeta{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.alertTime{
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.alertMessage{
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.tools{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.queueRow{
+  cursor: pointer;
+}
+
+.queueRowActive{
+  background: #eff6ff;
+}
+
+.priorityCritical{
+  border-color: #fca5a5;
+  background: #fee2e2;
+}
+
+.priorityHigh{
+  border-color: #fcd34d;
+  background: #fef3c7;
+}
+
+.detailBody{
+  display: grid;
+  gap: 14px;
+}
+
+.detailBlock{
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+}
+
+.detailLabel{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.detailValue{
+  margin-top: 6px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.assignRow{
+  display: grid;
+  gap: 10px;
+}
+
+.assignActions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.timeline{
+  display: grid;
+  gap: 10px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.timelineItem{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.timelineDot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--primary);
+  margin-top: 5px;
+}
+
+.timelineNote{
+  font-size: 13px;
+  color: var(--text);
+}
+
+.timelineMeta{
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.emptyState{
+  color: var(--muted);
+  font-size: 13px;
+  padding: 12px 0;
+}
+
+@media (max-width: 1100px){
+  .layout{
+    grid-template-columns: 1fr;
+  }
+
+  .alertList,
+  .timeline{
+    max-height: none;
+  }
+}

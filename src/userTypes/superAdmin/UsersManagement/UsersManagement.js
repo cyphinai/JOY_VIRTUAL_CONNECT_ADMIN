@@ -5,6 +5,7 @@ import "../../../components/UI/ui.css";
 import Pagination from "../../../components/Pagination/Pagination";
 import useLocalStorageState from "../../../app/hooks/useLocalStorageState";
 import { USERS_STORAGE_KEY, DEFAULT_USERS } from "../userFormUtils";
+import { isPanelAdminType } from "../adminControlUtils";
 
 function StatusBadge({ status }) {
   const cls =
@@ -58,6 +59,9 @@ export default function UsersManagement() {
           <Link to="/super-admin/users/new" className="btn btnPrimary">
             + Create user
           </Link>
+          <Link to="/super-admin/admin-control" className="btn">
+            Admin Control
+          </Link>
         </div>
         <div className="panelInner">
           <div className={styles.filters}>
@@ -83,6 +87,7 @@ export default function UsersManagement() {
               <option value="lawyer">Lawyer</option>
               <option value="roadside_assistance_agent">Roadside Assistance Agent</option>
               <option value="insurance_agent">Insurance Agent</option>
+              <option value="support_agent">Support Agent</option>
               <option value="super_admin">Super Admin</option>
             </select>
           </div>
@@ -118,6 +123,11 @@ export default function UsersManagement() {
                         <Link className="btn" to={`/super-admin/users/${u.id}`}>
                           View
                         </Link>
+                        {isPanelAdminType(u.type) ? (
+                          <Link className="btn btnPrimary" to={`/super-admin/admin-control/${u.id}`}>
+                            Control
+                          </Link>
+                        ) : null}
                         <Link className="btn" to={`/super-admin/users/${u.id}/edit`}>
                           Update
                         </Link>
